@@ -55,7 +55,9 @@ class Server(BaseHTTPRequestHandler):
                 time = 0
                 for match in history:
                     if match['finished'] and match['started']:
-                        time = time + match['finished']-match['started']
+                        duration = match['finished']-match['started']
+                        if math.ceil(duration / (60 * 60)) < 2:
+                            time = time + duration
                 hours = math.ceil(time / (60 * 60))
             if len(username) > 0 and hours > 0:
                 html = indexTemplate.substitute(name=username, hours=hours)
